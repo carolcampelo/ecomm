@@ -1,0 +1,13 @@
+{
+  "name": "account",
+  "version": "1.0.0",
+  "description": "Semana 2 JS Arrays e Objetos",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Carolina Campelo Guisso",
+  "license": "ISC"
+}

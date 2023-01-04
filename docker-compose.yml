@@ -3,3 +3,6 @@ services:
   ecomm-product:
     image: carolinaguisso/ecomm-product:1.0
     container_name: ecomm-product
+  account:
+    build: ./account
+    container_name: ecomm-account
