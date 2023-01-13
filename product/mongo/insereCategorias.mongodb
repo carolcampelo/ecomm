@@ -1,0 +1,14 @@
+//Inserção dos produtos configurada através do docker-compose com importação do csv por mongoimport
+
+use('ecomm-product');
+
+//Correção do tipo de status de string para booleano
+db.categories.updateMany(
+    {status: "true"}, 
+    {$set: {status: true}}
+)
+
+db.categories.updateMany(
+    {status: "false"}, 
+    {$set: {status: false}}
+)
