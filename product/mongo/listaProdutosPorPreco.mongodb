@@ -1,0 +1,14 @@
+use('ecomm-product');
+
+db.products.find(
+    {
+        $and: [
+            {"price": {$gte: 1000}},
+            {"price": {$lte: 2000}}
+        ]
+    },
+    {
+        "name":1, 
+        "price": 1
+    }
+)
