@@ -1,0 +1,5 @@
+use('ecomm-product')
+
+db.products.createIndex({"category.name": 1});
+
+db.products.createIndex({"slug": 1}, {unique: true});
