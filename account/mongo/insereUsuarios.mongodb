@@ -7,13 +7,24 @@ db.users.insertMany([{
     createdDate: new Date().toLocaleDateString('en-CA'),
     cpf: "063.279.910-25",
     telefone: "(51) 999988-8666",
-    endereço: [{
-        logradouro: "Rua VP",
-        numero: "10",
-        complemento: "S/N",
-        bairro: "Setor Goiânia 2",
-        cep: "74665760",
-        cidade: "Goiânia",
+    address: [{
+        addressName: "Trabalho",
+        street: "Rua VP",
+        number: "10",
+        complement: "S/N",
+        district: "Setor Goiânia 2",
+        zipCode: "74665760",
+        city: "Goiânia",
+        uf: "GO"
+    }, 
+    {
+        addressName: "Casa",
+        street: "Avenida Jamel Cecílio",
+        number: "S/N",
+        complement: "Casa 15",
+        district: "Residencial Alphaville Flamboyant",
+        zipCode: "74884902",
+        city: "Goiânia",
         uf: "GO"
     }]
     }, {
@@ -23,13 +34,14 @@ db.users.insertMany([{
     createdDate: new Date().toLocaleDateString('en-CA'),
     cpf: "027.080.940-68",
     telefone: "(51) 966688-8666",
-    endereço: [{
-        logradouro: "Beco Vinte e Um",
-        numero: "321",
-        complemento: "apto 02",
-        bairro: "União das Vilas",
-        cep: "97509064",
-        cidade: "Uruguaiana",
+    addressName: [{
+        addressName: "Casa",
+        street: "Beco Vinte e Um",
+        number: "321",
+        complement: "apto 02",
+        district: "União das Vilas",
+        zipCode: "97509064",
+        city: "Uruguaiana",
         uf: "RS"    
     }]
     }, {
@@ -39,13 +51,13 @@ db.users.insertMany([{
     createdDate: new Date().toLocaleDateString('en-CA'),
     cpf: "738.568.280-44",
     telefone: "(51) 977788-8666",
-    endereço: [{
-        logradouro: "Rua Seis",
-        numero: "25",
-        complemento: "apto 403",
-        bairro: "Residencial Itamarati",
-        cep: "78058867",
-        cidade: "Cuiabá",
+    addressName: [{
+        street: "Rua Seis",
+        number: "25",
+        complement: "apto 403",
+        district: "Residencial Itamarati",
+        zipCode: "78058867",
+        city: "Cuiabá",
         uf: "MT"    
     }]
     }
