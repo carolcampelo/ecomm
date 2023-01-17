@@ -1,0 +1,15 @@
+use('ecomm-product');
+
+db.products.find(
+    {
+        "category": {
+            $in: [
+                "livros",
+                "celulares"
+            ]
+        }
+    },
+    {
+        _id: 0, "name": 1, "category": 1
+    }
+)

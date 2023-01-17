@@ -1,0 +1,6 @@
+use('ecomm-product');
+
+db.products.find(
+    {"quantityInStock": {$gte: 3}},
+    {"name": 1, "quantityInStock": 1}
+)

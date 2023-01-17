@@ -1,0 +1,13 @@
+// docker exec -it mongo-ecomm mongosh "mongodb://admin:secret@127.0.0.1:27017/?authSource=admin"
+
+use('ecomm-product')
+
+db.products.find().forEach(function(product){
+    info = db.categories.find(
+        {name: product.category},
+        {_id: 1, name: 1, status: 1}).toArray();
+
+    db.products.updateMany(
+        {category: info[0].name},
+        {$set: {category: info[0]}});
+})

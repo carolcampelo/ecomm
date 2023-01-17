@@ -1,0 +1,5 @@
+use('ecomm-product')
+
+db.products.updateMany(
+    {"category.name": "livros"},
+    {$set: {"quantityInStock": 0}})
