@@ -1,0 +1,52 @@
+use('ecomm-account')
+
+db.users.insertMany([{
+    name: "Fiza Lekey",
+    email: "fizalekey@example.com",
+    password: "fizalekey123",
+    createdDate: new Date().toLocaleDateString('en-CA'),
+    cpf: "063.279.910-25",
+    telefone: "(51) 999988-8666",
+    endereço: [{
+        logradouro: "Rua VP",
+        numero: "10",
+        complemento: "S/N",
+        bairro: "Setor Goiânia 2",
+        cep: "74665760",
+        cidade: "Goiânia",
+        uf: "GO"
+    }]
+    }, {
+    name: "Zayn Taneo",
+    email: "zayntaneo@example.com",
+    password: "zayntaneo123",
+    createdDate: new Date().toLocaleDateString('en-CA'),
+    cpf: "027.080.940-68",
+    telefone: "(51) 966688-8666",
+    endereço: [{
+        logradouro: "Beco Vinte e Um",
+        numero: "321",
+        complemento: "apto 02",
+        bairro: "União das Vilas",
+        cep: "97509064",
+        cidade: "Uruguaiana",
+        uf: "RS"    
+    }]
+    }, {
+    name: "Rozia Roero",
+    email: "roziaroero@example.com",
+    password: "roziaroero123",
+    createdDate: new Date().toLocaleDateString('en-CA'),
+    cpf: "738.568.280-44",
+    telefone: "(51) 977788-8666",
+    endereço: [{
+        logradouro: "Rua Seis",
+        numero: "25",
+        complemento: "apto 403",
+        bairro: "Residencial Itamarati",
+        cep: "78058867",
+        cidade: "Cuiabá",
+        uf: "MT"    
+    }]
+    }
+])
