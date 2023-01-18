@@ -1,9 +1,10 @@
 use('ecomm-account')
 
+//Adicionando usuários-teste
 db.users.insertMany([{
     name: "Fiza Lekey",
     email: "fizalekey@example.com",
-    password: "fizalekey123",
+    password: "$2y$10$OLO0DWp5yjt/gGxLwU7VyOYl1hQd3G.bdy09EZXQu5/WQpH8cNsqq",
     createdDate: new Date().toLocaleDateString('en-CA'),
     cpf: "063.279.910-25",
     telefone: "(51) 999988-8666",
@@ -30,11 +31,11 @@ db.users.insertMany([{
     }, {
     name: "Zayn Taneo",
     email: "zayntaneo@example.com",
-    password: "zayntaneo123",
+    password: "$2y$10$r2GRZLKuBez0zDUhSgixtuI/YPES8GfYCrdI5EkqzA7bE4Cf7GxmG",
     createdDate: new Date().toLocaleDateString('en-CA'),
     cpf: "027.080.940-68",
     telefone: "(51) 966688-8666",
-    addressName: [{
+    address: [{
         addressName: "Casa",
         street: "Beco Vinte e Um",
         number: "321",
@@ -47,11 +48,11 @@ db.users.insertMany([{
     }, {
     name: "Rozia Roero",
     email: "roziaroero@example.com",
-    password: "roziaroero123",
+    password: "$2y$10$IA7AYMDaoSmMUrt.WPdVOujJkrRf/8yPiphopj5l7AtVTEZQGEVvW",
     createdDate: new Date().toLocaleDateString('en-CA'),
     cpf: "738.568.280-44",
     telefone: "(51) 977788-8666",
-    addressName: [{
+    address: [{
         street: "Rua Seis",
         number: "25",
         complement: "apto 403",
