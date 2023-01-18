@@ -27,8 +27,11 @@ db.users.insertMany([{
         zipCode: "74884902",
         city: "Goiânia",
         uf: "GO"
-    }]
-    }, {
+    }],
+    carrinho: {
+        produtos: []
+    }},
+    {
     name: "Zayn Taneo",
     email: "zayntaneo@example.com",
     password: "$2y$10$r2GRZLKuBez0zDUhSgixtuI/YPES8GfYCrdI5EkqzA7bE4Cf7GxmG",
@@ -44,8 +47,11 @@ db.users.insertMany([{
         zipCode: "97509064",
         city: "Uruguaiana",
         uf: "RS"    
-    }]
-    }, {
+    }],
+    carrinho: {
+        produtos: []
+    }},
+    {
     name: "Rozia Roero",
     email: "roziaroero@example.com",
     password: "$2y$10$IA7AYMDaoSmMUrt.WPdVOujJkrRf/8yPiphopj5l7AtVTEZQGEVvW",
@@ -60,6 +66,8 @@ db.users.insertMany([{
         zipCode: "78058867",
         city: "Cuiabá",
         uf: "MT"    
-    }]
-    }
+    }],
+    carrinho: {
+        produtos: []
+    }}
 ])
