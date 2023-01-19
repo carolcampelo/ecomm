@@ -28,8 +28,8 @@ db.users.insertMany([{
         city: "Goiânia",
         uf: "GO"
     }],
-    carrinho: {
-        produtos: []
+    cart: {
+        products: []
     }},
     {
     name: "Zayn Taneo",
@@ -48,8 +48,8 @@ db.users.insertMany([{
         city: "Uruguaiana",
         uf: "RS"    
     }],
-    carrinho: {
-        produtos: []
+    cart: {
+        products: []
     }},
     {
     name: "Rozia Roero",
@@ -67,7 +67,7 @@ db.users.insertMany([{
         city: "Cuiabá",
         uf: "MT"    
     }],
-    carrinho: {
-        produtos: []
+    cart: {
+        products: []
     }}
 ])
