@@ -1,0 +1,17 @@
+use('ecomm-product')
+
+db.products.aggregate([
+    {
+        $project: {
+            _id: 1,
+            name: "$name",
+            description: "$description",
+            slug: "$slug",
+            price: {$round: [{$toDecimal: "$price"}, 2]},
+            quantityInStock: "$quantityInStock",
+            category: "$category"
+        }
+    },{
+        $out: "products"
+    }
+])
