@@ -1,0 +1,69 @@
+use('ecomm-product')
+let product = db.products.findOneAndUpdate(
+    {slug: "tablet-galaxy-tab-s8", 
+    quantityInStock: {
+        $gte: 2
+    }
+    }, {
+        $inc: {
+            quantityInStock: -2
+        }
+    }, {
+        projection: {
+            _id: 0,
+            name: 1,
+            price: 1
+        }
+    })
+
+    product.quantity = 2;
+    product.discountPercent = 0;
+    product.finalPrice = NumberDecimal((product.quantity * (product.price - ((product.price / 100) * product.discountPercent))).toFixed(2))
+
+use('ecomm-account')
+
+db.users.updateOne({
+    cpf: "738.568.280-44"
+},{
+    $push: {
+        "cart.products": {
+            $each: [product]
+        }
+    }
+})
+
+db.users.aggregate([
+    {
+        $match: {
+            cpf: "738.568.280-44"
+            }
+    }, {
+        $project: {
+          _id: 0,
+          orderDate: ISODate(),
+          customer: { 
+            customer_id: "$_id", 
+            customer_name: "$name"
+            },
+          deliveryAddress: {
+            $arrayElemAt: ["$address", 0]
+          },          
+          products: "$cart.products",
+          totalPrice: {
+            $sum: "$cart.products.finalPrice"
+          }
+        }
+    },{
+        $merge: {
+            into: {db: "ecomm-order", coll: "orders"}
+        }
+    }
+])
+
+db.users.updateOne({
+    cpf: "738.568.280-44"
+},{
+    $set: {
+        "cart.products": []
+    }
+})
