@@ -17,17 +17,8 @@ services:
       - mongo-ecomm
     volumes: 
       - "./mongo-seed:/mongo-seed"
-    command: mongoimport --uri "mongodb://admin:secret@mongo-ecomm:27017/?authSource=admin" --db ecomm-product --collection products --type=csv --file /mongo-seed/ecomm-produtos.csv --headerline
-
-  mongo-seed2:
-    image: mongo
-    container_name: mongo-seed2
-    links:
-      - mongo-ecomm
-    volumes: 
-      - "./mongo-seed:/mongo-seed"
-    command: mongoimport --uri "mongodb://admin:secret@mongo-ecomm:27017/?authSource=admin" --db ecomm-product --collection categories --type=csv --file /mongo-seed/ecomm-categorias.csv --headerline
-
+    command: /bin/bash "/mongo-seed/import.sh"
+    
   ecomm-product:
     image: carolinaguisso/ecomm-product:1.0
     container_name: ecomm-product
