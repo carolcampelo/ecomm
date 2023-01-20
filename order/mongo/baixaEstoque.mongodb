@@ -42,8 +42,8 @@ db.users.aggregate([
           _id: 0,
           orderDate: ISODate(),
           customer: { 
-            customer_id: "$_id", 
-            customer_name: "$name"
+            customerId: "$_id", 
+            customerNname: "$name"
             },
           deliveryAddress: {
             $arrayElemAt: ["$address", 0]
