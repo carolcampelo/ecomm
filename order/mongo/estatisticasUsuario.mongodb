@@ -1,0 +1,40 @@
+use('ecomm-order')
+
+db.orders.aggregate([
+    {
+        $match: {
+            "customer.customerId": ObjectId("63cac7c5d56b65a5b2f25ea2")
+        }
+    }, {
+        $unwind: "$products"
+    }, {
+        $group: {
+            _id: "products",
+            price: {
+                $sum: "$products.price"
+            },
+            quantity: {
+                $sum: "$products.quantity"
+            },
+            finalPrice: {
+                $sum: "$products.finalPrice"
+            }
+        }
+    }, {
+        $project: {
+            _id: 0,
+            totalPrice: "$price",
+            totalQuantity: "$quantity",
+            totalDiscount: {
+                $round: [{
+                $subtract: ["$price", "$finalPrice"]
+            }, 2]
+            },
+            finalPrice: "$finalPrice"
+        }
+    }, {
+        $merge: {
+            into: {db: "ecomm-order", coll: "ordersStatistics"}
+        }
+    }
+])
