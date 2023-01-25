@@ -17,8 +17,8 @@ services:
       - mongo-ecomm
     volumes: 
       - "./mongo-seed:/mongo-seed"
-    command: /bin/sh "/mongo-seed/import.sh"
-
+    command: /bin/bash "/mongo-seed/import.sh"
+    
   ecomm-product:
     image: carolinaguisso/ecomm-product:1.0
     container_name: ecomm-product

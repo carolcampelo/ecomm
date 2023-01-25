@@ -1,9 +1,9 @@
 name,status
-INFORMÁTICA,true
-BELEZA,false
-CELULARES,true
-MÓVEIS,true
-LUXO,false
-ESPORTE,false
-AUTOMOTIVA,true
-LIVROS,true
+informatica,true
+beleza,false
+celulares,true
+moveis,true
+luxo,false
+esporte,false
+automotiva,true
+livros,true

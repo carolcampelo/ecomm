@@ -1,0 +1,168 @@
+//Selecionando itens para incluir no carrinho
+use('ecomm-product')
+
+let product = db.products.findOneAndUpdate(
+    {slug: "iphone-13-pro", 
+    quantityInStock: {
+        $gt: 0
+    }
+    }, {
+        $inc: {
+            quantityInStock: -1
+        }
+    }, {
+        projection: {
+            _id: 0,
+            name: 1,
+            price: 1
+        }
+    })
+
+    product.quantity = 1;
+    product.discountPercent = 10;
+    product.finalPrice = NumberDecimal((product.quantity * (product.price - ((product.price / 100) * product.discountPercent))).toFixed(2))
+
+let product2 = db.products.findOneAndUpdate(
+    {slug: "livro-clean", 
+    quantityInStock: {
+        $gt: 0
+    }
+    }, {
+        $inc: {
+            quantityInStock: -1
+        }
+    }, {
+        projection: {
+            _id: 0,
+            name: 1,
+            price: 1
+        }
+    })
+
+    product2.quantity = 1;
+    product2.discountPercent = 10;
+    product2.finalPrice = NumberDecimal((product2.quantity * (product2.price - ((product2.price / 100) * product2.discountPercent))).toFixed(2))
+
+//Selecionando usuário e inserindo itens no carrinho
+use('ecomm-account')
+
+db.users.updateOne({
+    cpf: "063.279.910-25"
+},{
+    $push: {
+        "cart.products": {
+            $each: [product, product2]
+        }
+    }
+})
+
+//Inserindo pedido 1
+db.users.aggregate([
+    {
+        $match: {
+            cpf: "063.279.910-25"
+            }
+    }, {
+        $project: {
+          _id: 0,
+          orderDate: ISODate(),
+          customer: { 
+            customerId: "$_id", 
+            customerName: "$name"
+            },
+          deliveryAddress: {
+            $arrayElemAt: ["$address", 1]
+          },          
+          products: "$cart.products",
+          totalPrice: {
+            $sum: "$cart.products.finalPrice"
+          }
+        }
+    },{
+        $merge: {
+            into: {db: "ecomm-order", coll: "orders"}
+        }
+    }
+])
+
+//Limpando carrinho
+use('ecomm-account')
+
+db.users.updateOne({
+    cpf: "063.279.910-25"
+},{
+    $set: {
+        "cart.products": []
+    }
+})
+
+//Novo pedido
+use('ecomm-product')
+let product = db.products.findOneAndUpdate(
+    {slug: "livro-building-microservices", 
+    quantityInStock: {
+        $gt: 0
+    }
+    }, {
+        $inc: {
+            quantityInStock: -1
+        }
+    }, {
+        projection: {
+            _id: 0,
+            name: 1,
+            price: 1
+        }
+    })
+
+    product.quantity = 1;
+    product.discountPercent = 0;
+    product.finalPrice = NumberDecimal((product.quantity * (product.price - ((product.price / 100) * product.discountPercent))).toFixed(2))
+
+use('ecomm-account')
+
+db.users.updateOne({
+    cpf: "063.279.910-25"
+},{
+    $push: {
+        "cart.products": {
+            $each: [product]
+        }
+    }
+})
+
+db.users.aggregate([
+    {
+        $match: {
+            cpf: "063.279.910-25"
+            }
+    }, {
+        $project: {
+          _id: 0,
+          orderDate: ISODate(),
+          customer: { 
+            customerId: "$_id", 
+            customerName: "$name"
+            },
+          deliveryAddress: {
+            $arrayElemAt: ["$address", 1]
+          },          
+          products: "$cart.products",
+          totalPrice: {
+            $sum: "$cart.products.finalPrice"
+          }
+        }
+    },{
+        $merge: {
+            into: {db: "ecomm-order", coll: "orders"}
+        }
+    }
+])
+
+db.users.updateOne({
+    cpf: "063.279.910-25"
+},{
+    $set: {
+        "cart.products": []
+    }
+})
