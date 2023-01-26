@@ -1,0 +1,280 @@
+openapi: 3.0.1
+info:
+  title: E-Commerce API - Products
+  description: API to control products and their categories in an e-Commerce.
+  version: 0.0.1
+  termsOfService: https://mockapi.io
+  contact: 
+    name: Developers Support
+    email: contact@example.com
+    url: https://mockapi.io
+  license:
+    name: GPLv3
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+externalDocs:
+  description: Burocratic documentation
+  url: https://mockapi.io
+paths:
+  /api/categories:
+    get: 
+      summary: Retrieve all categories
+      responses:
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Categories"
+        404:
+          description: Categories not found.
+          content: 
+            application/json:
+              example: Not found
+  /api/categories/{id}:
+    get:
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+      summary: Retrieve category by ID
+      responses: 
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Category"
+        404:
+          description: Category not found
+          content:
+            application/json:
+              example: Not Found
+  /api/admin/categories:
+    post:
+      tags:
+        - admin
+      summary: Create new category
+      description: Only administrative users will be able to create new categories on the API. 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                name:
+                  type: string
+      responses:
+        201:
+          description: Success
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Category"
+        401:
+          description: Access denied
+          content: 
+            application/json:
+              example: Unauthorized
+  /api/admin/categories/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    put:
+      tags:
+        - admin
+      summary: Update category data
+      description: Only administrative users will be able to create new categories on the API. 
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Category"
+        401:
+          description: Access denied
+          content: 
+            application/json:
+              example: Unauthorized
+    delete:
+      tags:
+        - admin
+      summary: Delete category
+      description: Only administrative users will be able to create new categories on the API. 
+      responses:
+        200:
+          description: Success
+          content: 
+            application/json:
+              example: Category deleted
+        401:
+          description: Access denied
+          content: 
+            application/json:
+              example: Unauthorized
+    patch:
+      tags:
+        - admin
+      summary: Activate a category
+      description: Only administrative users will be able to create new categories on the API.
+      responses:
+        200:
+          description: Success
+          content: 
+            application/json:
+              example: Category activate
+        401:
+          description: Access denied
+          content: 
+            application/json:
+              example: Unauthorized
+  /api/products:
+    get: 
+      summary: Retrieve all products
+      responses:
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Products"
+        404:
+          description: Products not found
+          content: 
+            application/json:
+              example: Not found
+  /api/products/{id}:
+    get:
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+      summary: Retrieve product by ID
+      responses: 
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Product"
+        404:
+          description: Product not found
+          content:
+            application/json:
+              example: Not Found
+  /api/admin/products:
+    post:
+      tags:
+        - admin
+      summary: Add a new product
+      description: Only administrative users will be able to create new cproducts on the API. 
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        201:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+  /api/admin/products/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    put:
+      tags:
+        - admin
+      summary: Update product data
+      description: Only administrative users will be able to create new categories on the API. 
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Product"
+        401:
+          description: Access denied
+          content: 
+            application/json:
+              example: Unauthorized
+    delete:
+      tags:
+        - admin
+      summary: Delete product
+      description: Only administrative users will be able to create new categories on the API. 
+      responses:
+        200:
+          description: Success
+          content: 
+            application/json:
+              example: Product deleted
+        401:
+          description: Access denied
+          content: 
+            application/json:
+              example: Unauthorized
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: boolean
+    Categories:
+      type: array
+      items:
+        $ref: "#/components/schemas/Category"
+    Product:
+      type: object
+      properties:
+        id: 
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        slug:
+          type: string
+        price:
+          type: number
+        quantityInStock:
+          type: integer
+        category:
+          type: string
+    Products:
+      type: array
+      items:
+        $ref: "#components/schemas/Product"
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
