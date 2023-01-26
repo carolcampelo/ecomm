@@ -1,0 +1,119 @@
+openapi: 3.0.1
+info:
+  title: E-Commerce API - Orders
+  description: API to control orders in an e-Commerce.
+  version: 0.0.1
+  termsOfService: https://mockapi.io
+  contact: 
+    name: Developers Support
+    email: contact@example.com
+    url: https://mockapi.io
+  license:
+    name: GPLv3
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+externalDocs:
+  description: Burocratic documentation
+  url: https://mockapi.io
+paths:
+  /api/orders:
+    post:
+      summary: Create a new order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+      responses:
+        201:
+          description: Success
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Order"
+        400:
+          description: Error. Bad Request.
+          content: 
+            application/json:
+              example: Bad Request.
+  /api/orders/{id}:
+    get:
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+      summary: Retrieve order by ID
+      responses: 
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Order"
+        404:
+          description: Order not found
+          content:
+            application/json:
+              example: Not Found
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        customerId: 
+          type: string
+        customerName:
+          type: string
+    DeliveryAddress: 
+      type: object
+      properties: 
+        addressName:
+          type: string
+        street:
+          type: string
+        number:
+          type: number
+        complement:
+          type: string
+        district:
+          type: string
+        zipCode:
+          type: string
+        city:
+          type: string
+        uf:
+          type: string
+    Product:
+      type: object
+      properties:
+        id: 
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        discount:
+          type: number
+        quantity:
+          type: integer
+        finalPrice:
+          type: number
+    Products:
+      type: array
+      items:
+        $ref: "#/components/schemas/Product"
+    Order:
+      type: object
+      properties:
+        customer:
+          $ref: "#/components/schemas/Customer"
+        deliveryAddress:
+          $ref: "#/components/schemas/DeliveryAddress"
+        products:
+          $ref: "#/components/schemas/Products"
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
