@@ -1,0 +1,171 @@
+openapi: 3.0.1
+info:
+  title: E-Commerce API - Accounts
+  description: API to control accounts in an e-Commerce.
+  version: 0.0.1
+  termsOfService: https://mockapi.io
+  contact: 
+    name: Developers Support
+    email: contact@example.com
+    url: https://mockapi.io
+  license:
+    name: GPLv3
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+externalDocs:
+  description: Burocratic documentation
+  url: https://mockapi.io
+paths:
+  /api/accounts:
+    get: 
+      summary: Retrieve all users
+      responses:
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Users"
+        404:
+          description: Users not found.
+          content: 
+            application/json:
+              example: Not found
+  /api/accounts/{id}:
+    get:
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+      summary: Retrieve user by ID
+      responses: 
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/User"
+        404:
+          description: User not found
+          content:
+            application/json:
+              example: Not Found
+  /api/admin/accounts:
+    post:
+      tags:
+       - admin
+      summary: Create new user
+      description: Only administrative users will be able to create new categories on the API. 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        201:
+          description: Success
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/User"
+        401:
+          description: Access denied
+          content: 
+            application/json:
+              example: Unauthorized
+  /api/admin/accounts/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    put:
+      tags:
+        - admin
+      summary: Update user data
+      description: Only administrative users will be able to create new categories on the API. 
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/User"
+        401:
+          description: Access denied
+          content: 
+            application/json:
+              example: Unauthorized
+    delete:
+      tags:
+        - admin
+      summary: Delete user
+      description: Only administrative users will be able to create new categories on the API. 
+      responses:
+        200:
+          description: Success
+          content: 
+            application/json:
+              example: User deleted
+        401:
+          description: Access denied
+          content: 
+            application/json:
+              example: Unauthorized
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        cpf:
+          type: string
+        telefone:
+          type: string
+        addresses:
+          schema:
+            $ref: "#/components/schemas/Addresses"
+    Users:
+      type: array
+      items:
+        $ref: "#/components/schemas/User"
+    Address: 
+      type: object
+      properties: 
+        addressName:
+          type: string
+        street:
+          type: string
+        number:
+          type: number
+        complement:
+          type: string
+        district:
+          type: string
+        zipCode:
+          type: string
+        city:
+          type: string
+        uf:
+          type: string
+    Addresses:
+      type: array
+      items:
+        $ref: "#/components/schemas/Address"
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
