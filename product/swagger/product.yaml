@@ -31,13 +31,13 @@ paths:
             application/json:
               example: Not found
   /api/categories/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: string
+      required: true
     get:
-      parameters:
-      - name: id
-        in: path
-        schema:
-          type: string
-        required: true
       summary: Retrieve category by ID
       responses: 
         200:
@@ -54,7 +54,7 @@ paths:
   /api/admin/categories:
     post:
       tags:
-        - admin
+       - admin
       summary: Create new category
       description: Only administrative users will be able to create new categories on the API. 
       requestBody:
@@ -141,6 +141,39 @@ paths:
   /api/products:
     get: 
       summary: Retrieve all products
+      description: Returns all products using certain queries or not.
+      parameters:
+        - name: category
+          in: query
+          description: Category's name to filter products
+          explode: true
+          schema:
+            type: string
+            default: available
+            enum:
+              - "informatica"
+              - "celulares"
+              - "beleza"
+              - "luxo"
+              - "esporte"
+              - "automotiva"
+              - "livros"
+              - "moveis"
+        - name: minPrice
+          in: query
+          description: Minimum value for price range query
+          schema:
+            type: number
+        - name: maxPrice
+          in: query
+          description: Maximum value for price range query
+          schema:
+            type: number
+        - name: quantityInStockGreaterThan
+          in: query
+          description: Retrieve products that has quantity in stock greater than the set number
+          schema:
+            type: number
       responses:
         200:
           description: Success
@@ -272,7 +305,7 @@ components:
     Products:
       type: array
       items:
-        $ref: "#components/schemas/Product"
+        $ref: "#/components/schemas/Product"
   securitySchemes:
     auth:
       type: http
