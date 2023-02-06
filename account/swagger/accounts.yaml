@@ -15,21 +15,6 @@ externalDocs:
   description: Burocratic documentation
   url: https://mockapi.io
 paths:
-  /api/accounts:
-    get: 
-      summary: Retrieve all users
-      responses:
-        200:
-          description: Success
-          content: 
-            application/json:
-              schema: 
-                $ref: "#/components/schemas/Users"
-        404:
-          description: Users not found.
-          content: 
-            application/json:
-              example: Not found
   /api/accounts/{id}:
     get:
       parameters:
@@ -52,6 +37,22 @@ paths:
             application/json:
               example: Not Found
   /api/admin/accounts:
+    get:
+      tags:
+       - admin
+      summary: Retrieve all users
+      responses:
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Users"
+        404:
+          description: Users not found.
+          content: 
+            application/json:
+              example: Not found
     post:
       tags:
        - admin
@@ -135,7 +136,8 @@ components:
         telefone:
           type: string
         addresses:
-          schema:
+          type: array
+          items:
             $ref: "#/components/schemas/Addresses"
     Users:
       type: array
