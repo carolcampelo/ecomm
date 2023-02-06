@@ -1,13 +1,19 @@
 {
   "name": "account",
   "version": "1.0.0",
-  "description": "Semana 2 JS Arrays e Objetos",
-  "main": "index.js",
+  "description": "API Accounts do E-comm",
+  "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "start": "node src/main.js",
+    "dev": "nodemon ./server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Carolina Campelo Guisso",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.9.0",
+    "nodemon": "^2.0.20"
+  }
 }
