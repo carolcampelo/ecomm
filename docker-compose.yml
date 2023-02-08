@@ -19,8 +19,8 @@ services:
       - "./mongo-seed:/mongo-seed"
     command: /bin/bash "/mongo-seed/import.sh"
     
-  ecomm-product:
-    image: carolinaguisso/ecomm-product:1.0
+  product:
+    build: ./product
     container_name: ecomm-product
 
   account:
