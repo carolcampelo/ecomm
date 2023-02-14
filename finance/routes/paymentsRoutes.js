@@ -1,11 +1,12 @@
 const { Router } = require('express');
-const PaymentsControllers = require('../controllers/PaymentsControllers.js');
+const PaymentsController = require('../controllers/PaymentsController.js');
 
 const router = Router();
 
 router
-    .get("/payments/:id", PaymentsControllers.getPaymentsById)
-    .post("/payments", PaymentsControllers.addPayments)
-    .patch("/payments/:id", PaymentsControllers.changePaymentStatus)
+    .get("/payments/:id", PaymentsController.getPaymentsById)
+    .post("/payments", PaymentsController.addPayments)
+    .patch("/payments/:id", PaymentsController.updatePaymentStatus)
+    .patch("/payments/:id/:status", PaymentsController.updatePaymentStatusByLink)
 
 module.exports = router;

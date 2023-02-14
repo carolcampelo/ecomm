@@ -34,6 +34,10 @@ module.exports = {
         defaultValue: "CRIADO",
         type: Sequelize.STRING
       },
+      links: {
+        allowNull: true,
+        type: Sequelize.JSON
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

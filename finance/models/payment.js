@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     cardNumber: DataTypes.STRING,
     expDate: DataTypes.STRING,
     cvv: DataTypes.STRING,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    links: DataTypes.JSON
   }, {
     sequelize,
     modelName: 'Payments',
