@@ -11,7 +11,7 @@ module.exports = {
       },
       totalPrice: {
         allowNull: false,
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL
       },
       cardName: {
         allowNull: false,
@@ -38,6 +38,10 @@ module.exports = {
         allowNull: true,
         type: Sequelize.JSON
       },
+      invoiceId: {
+        allowNull: true,
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -49,6 +53,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('');
+    await queryInterface.dropTable('Payments');
   }
 };

@@ -4,8 +4,11 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Payments extends Model {
+    
     static associate(models) {
-      // define association here 
+      Payments.hasOne(models.Invoices, {
+        foreignKey: 'paymentId'
+      })
     }
   }
   Payments.init({
@@ -15,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     expDate: DataTypes.STRING,
     cvv: DataTypes.STRING,
     status: DataTypes.STRING,
+    invoiceId: DataTypes.INTEGER,
     links: DataTypes.JSON
   }, {
     sequelize,

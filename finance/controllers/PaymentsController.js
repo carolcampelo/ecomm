@@ -96,6 +96,7 @@ class PaymentsController {
 
     static async updatePaymentStatusByLink(req, res){
         const {id, status} = req.params;
+        const invoiceData = { ...req.body, paymentId: Number(id)};
 
         try {
             await db.Payments.update({
@@ -106,6 +107,20 @@ class PaymentsController {
                         Number(id)
                 }
             });
+
+            if (status == 'CONFIRMADO') {
+                const invoice = await db.Invoices.create(invoiceData)
+                await db.Payments.update({
+                    invoiceId: invoice.id
+                },
+                {
+                    where: {
+                        id: 
+                            Number(id)
+                    }
+                })
+            }
+
             const payment = await db.Payments.findOne({
                 where: {
                     id: 
@@ -115,6 +130,8 @@ class PaymentsController {
                     exclude: ['cvv', 'links']
                 }
             })
+
+            console.log(payment)
             return res.status(200).json(payment)
         } catch {
             return res.status(500).json({message: 'Status update failed.'})
