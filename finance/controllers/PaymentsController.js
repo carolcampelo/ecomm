@@ -20,12 +20,12 @@ class PaymentsController {
                         {
                             "rel": "CANCELADO",
                             method: "PATCH",
-                            "href": `http://localhost:3000/payments/${addNewPayment.id}/CANCELADO`
+                            "href": `http://localhost:3002/payments/${addNewPayment.id}/CANCELADO`
                         },
                         {
                             "rel": "CONFIRMADO",
                             method: "PATCH",
-                            "href": `http://localhost:3000/payments/${addNewPayment.id}/CONFIRMADO`
+                            "href": `http://localhost:3002/payments/${addNewPayment.id}/CONFIRMADO`
                         }
                     ]
                 }
