@@ -31,7 +31,23 @@ services:
   product:
     build: ./product
     container_name: ecomm-product
+    ports: 
+      - "3002:3002"
 
   account:
     build: ./account
     container_name: ecomm-account
+    ports:
+      - "3003:3003"
+
+  finance:
+    build: ./finance
+    container_name: ecomm-finance
+    ports:
+      - "3004:3004"
+
+  order:
+    build: ./order
+    container_name: ecomm-order
+    ports:
+      - "3005:3005"

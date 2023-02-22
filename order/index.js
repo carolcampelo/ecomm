@@ -2,7 +2,7 @@ const express = require('express');
 const routes = require('./routes/index.js');
 
 const app = express();
-const port = 3003;
+const port = 3005;
 
 routes(app);
 
