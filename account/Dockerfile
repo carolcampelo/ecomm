@@ -1,6 +1,5 @@
 FROM node
 WORKDIR /app/account
-COPY package*.json .
+COPY . .
 RUN npm install
-COPY . . 
 ENTRYPOINT npm start 
