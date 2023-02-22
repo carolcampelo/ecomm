@@ -24,10 +24,10 @@ class CategoryController {
     }
 
     static addCategories = (req, res) => {
-        let category = new categories(req.body);
+        let category = new Categories(req.body);
         category.save((err) => {
             if(err){
-                res.status(401).send({message: `${err.message} - Access Denied.`})
+                res.status(400).send({message: `${err.message} - Add category failed.`})
             } else {
                 res.status(201).send(category.toJSON())
             }
