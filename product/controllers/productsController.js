@@ -24,7 +24,7 @@ class ProductController {
     }
 
     static addProducts = (req, res) => {
-        let product = new products(req.body);
+        let product = new Products(req.body);
         product.save((err) => {
             if(err){
                 res.status(401).send({message: `${err.message} - Access Denied.`})
