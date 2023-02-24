@@ -1,6 +1,7 @@
 const db = require('../models');
 const DataValidations = require('../validations/DataValidation.js');
 const {HOST, PORT, STATUS} = require('../utils/constants.js');
+const { sequelize } = require('../models');
 
 class PaymentsController {
     static async addPayments(req, res){
@@ -47,7 +48,22 @@ class PaymentsController {
             const paymentById = await db.Payments.findOne({
                 where: {
                     id: Number(id)}, attributes: {exclude: ['cvv']}
-                })
+                });
+
+            const statusLinks = [
+                {
+                    "rel": "CANCELADO",
+                    method: "PATCH",
+                    "href": `http://${HOST}:${PORT}/payments/${paymentById.id}/CANCELADO`
+                },
+                {
+                    "rel": "CONFIRMADO",
+                    method: "PATCH",
+                    "href": `http://${HOST}:${PORT}/payments/${paymentById.id}/CONFIRMADO`
+                }
+            ];
+            
+            paymentById.links = statusLinks;
             return res.status(200).json(paymentById)
         } catch {
             return res.status(404).json({message: "ID Not Found"})
@@ -93,11 +109,9 @@ class PaymentsController {
     static async updatePaymentStatusByLink(req, res){
         const {id, status} = req.params;
         const invoiceData = { ...req.body, paymentId: Number(id)};
+        const t = await sequelize.transaction();
 
         const paymentById = await db.Payments.findOne({where: {id: Number(id)}});
-
-        console.log(paymentById.status);
-        console.log(STATUS.criado);
 
         if (paymentById.status != STATUS.criado) {
             return res.status(405).json({message: "Initial status must be 'CRIADO'."})
@@ -111,10 +125,12 @@ class PaymentsController {
                     id: 
                         Number(id)
                 }
+            }, {
+                transaction: t
             });
 
             if (status === STATUS.confirmado) {
-                const invoice = await db.Invoices.create(invoiceData)
+                const invoice = await db.Invoices.create(invoiceData, {transaction: t})
                 await db.Payments.update({
                     invoiceId: invoice.id
                 },
@@ -136,10 +152,11 @@ class PaymentsController {
                 }
             })
 
-            console.log(payment)
-            return res.status(200).json(payment)
+            await t.commit();
+            return res.status(200).json(payment);
         } catch {
-            return res.status(500).json({message: 'Status update failed.'})
+            await t.rollback();
+            return res.status(500).json({message: 'Status update failed.'});
         }
     }
 }
