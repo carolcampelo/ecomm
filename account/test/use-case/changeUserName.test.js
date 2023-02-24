@@ -1,5 +1,5 @@
-import { accounts, createUserUseCase } from "../src/use-case/createUserAccount.js";
-import { changeUserNameUseCase } from "../src/use-case/changeUserName.js";
+import { accounts, createUserUseCase } from "../../src/use-case/createUserAccount.js";
+import { changeUserNameUseCase } from "../../src/use-case/changeUserName.js";
 
 //Criação de array de usuários
 createUserUseCase("Carolina", "carol@email.com", "senhaCarol123");
