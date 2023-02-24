@@ -1,7 +1,7 @@
 import products from "../models/product.js";
 
 class ProductController {
-    static listProducts = (req, res) => {
+    static findProducts = (req, res) => {
         products.find((err, products) => {
             if (err) {
                 res.status(404).send({message: 'Products not found'})
@@ -11,7 +11,7 @@ class ProductController {
         })
     }
 
-    static listProductsById = (req, res) => {
+    static findProductById = (req, res) => {
         const id = req.params.id;
 
         products.findById(id, (err, products) => {
@@ -24,7 +24,7 @@ class ProductController {
     }
 
     static addProducts = (req, res) => {
-        let product = new products(req.body);
+        let product = new Products(req.body);
         product.save((err) => {
             if(err){
                 res.status(401).send({message: `${err.message} - Access Denied.`})

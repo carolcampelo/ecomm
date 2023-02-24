@@ -1,5 +1,5 @@
 FROM node
-WORKDIR /app/account
+WORKDIR /app/finance
 COPY . .
 RUN npm install
 ENTRYPOINT npm start 

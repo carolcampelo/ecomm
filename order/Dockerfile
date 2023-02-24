@@ -1,5 +1,5 @@
 FROM node
-WORKDIR /app/account
+WORKDIR /app/order
 COPY . .
 RUN npm install
 ENTRYPOINT npm start 
