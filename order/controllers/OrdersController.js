@@ -1,4 +1,5 @@
 const db = require('../models');
+const {host, port} = require('../utils/constants.js');
 
 class OrdersController {
     static async addNewOrder(req, res){
@@ -12,12 +13,12 @@ class OrdersController {
                     {
                         "rel": "CANCELADO",
                         method: "PATCH",
-                        "href": `http://localhost:3003/orders/${newOrder.id}/CANCELADO`
+                        "href": `http://${host}:${port}/orders/${newOrder.id}/CANCELADO`
                     },
                     {
                         "rel": "PAGO",
                         method: "PATCH",
-                        "href": `http://localhost:3003/orders/${newOrder.id}/PAGO`
+                        "href": `http://${host}:${port}/orders/${newOrder.id}/PAGO`
                     }
                 ]
             }
@@ -38,7 +39,7 @@ class OrdersController {
             await db.Orders.update({status: status}, {where: {id: Number(id)}});
             const statusUpdatedOrder = await db.Orders.findOne({where: {id: Number(id)}});
 
-            const customerInfos = await fetch(`http://localhost:3001/api/users/${statusUpdatedOrder.customerId}`)
+            const customerInfos = await fetch(`http://${host}:3003/api/users/${statusUpdatedOrder.customerId}`)
                 .then((response) => response.json())
                 
             await db.Orders.update({
