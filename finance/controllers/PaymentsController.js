@@ -109,8 +109,7 @@ class PaymentsController {
     static async updatePaymentStatusByLink(req, res){
         const {id, status} = req.params;
         const invoiceData = { ...req.body, paymentId: Number(id)};
-        const t = await sequelize.transaction();
-
+        
         const paymentById = await db.Payments.findOne({where: {id: Number(id)}});
 
         if (paymentById.status != STATUS.criado) {
@@ -125,12 +124,10 @@ class PaymentsController {
                     id: 
                         Number(id)
                 }
-            }, {
-                transaction: t
             });
 
             if (status === STATUS.confirmado) {
-                const invoice = await db.Invoices.create(invoiceData, {transaction: t})
+                const invoice = await db.Invoices.create(invoiceData)
                 await db.Payments.update({
                     invoiceId: invoice.id
                 },
@@ -151,11 +148,8 @@ class PaymentsController {
                     exclude: ['cvv', 'links']
                 }
             })
-
-            await t.commit();
-            return res.status(200).json(payment);
+            return res.status(200).json(payment); 
         } catch {
-            await t.rollback();
             return res.status(500).json({message: 'Status update failed.'});
         }
     }
