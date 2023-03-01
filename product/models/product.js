@@ -7,13 +7,13 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 3,
-      match: /^\D+\w{2,}$/,
+      match: /^\D+(\w*\d*\s*)*\S+$/,
     },
     description: { type: String, required: true },
     slug: {
       type: String,
       required: true,
-      match: /^[A-Za-z0-9]*$/,
+      match: /^(\w+-?)*$/,
     },
     price: {
       type: mongoose.Types.Decimal128,

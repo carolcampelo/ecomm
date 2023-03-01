@@ -24,7 +24,7 @@ class UserController {
   };
 
   static addUsers = (req, res) => {
-    const user = new Users(req.body);
+    const user = new users(req.body);
     user.save((err) => {
       if (err) {
         res.status(401).send({ message: `${err.message} - Access Denied.` });

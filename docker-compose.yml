@@ -10,7 +10,7 @@ services:
       MYSQL_ROOT_PASSWORD: secret
 
   mongo-ecomm:
-    image: mongo
+    image: mongo:5
     restart: always
     container_name: mongo-ecomm
     environment:
@@ -20,7 +20,7 @@ services:
       - "27017:27017"
 
   mongo-seed:
-    image: mongo
+    image: mongo:5
     container_name: mongo-seed
     links:
       - mongo-ecomm

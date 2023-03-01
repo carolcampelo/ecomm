@@ -24,7 +24,7 @@ class CategoryController {
   };
 
   static addCategories = (req, res) => {
-    const category = new Categories(req.body);
+    const category = new categories(req.body);
     category.save((err) => {
       if (err) {
         res.status(400).send({ message: `${err.message} - Add category failed.` });
