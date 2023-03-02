@@ -33,12 +33,20 @@ services:
     container_name: ecomm-product
     ports: 
       - "3002:3002"
+    environment:
+      - DB_HOST=mongo-ecomm
+    depends_on:
+      - mongo-ecomm
 
   account:
     build: ./account
     container_name: ecomm-account
     ports:
       - "3003:3003"
+    environment:
+      - DB_HOST=mongo-ecomm
+    depends_on:
+      - mongo-ecomm
 
   finance:
     build: ./finance
