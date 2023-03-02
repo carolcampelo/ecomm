@@ -34,7 +34,7 @@ class PaymentsController {
 
       payment.links = statusLinks;
 
-      return res.status(200).location(`http://${HOST}:${PORT}/payments/${payment.id}`).json(payment);
+      return res.status(201).location(`http://${HOST}:${PORT}/payments/${payment.id}`).json(payment);
     } catch {
       return res.status(500).json({ message: 'Error' });
     }
