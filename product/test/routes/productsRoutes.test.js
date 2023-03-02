@@ -12,25 +12,21 @@ afterEach(() => {
   server.close();
 });
 
-let idResponse;
 describe('GET in /api/products', () => {
   it('Should return a list of products', async () => {
-    const response = await request(app)
+    await request(app)
       .get('/api/products')
       .set('Accept', 'application/json')
       .expect('content-type', /json/)
       .expect(200);
-
-    // eslint-disable-next-line no-underscore-dangle
-    idResponse = response.body[0]._id;
-    console.log(idResponse);
   });
 });
 
+let idResponse;
 describe('POST in /api/admin/products', () => {
-  it('Should NOT add a new product', async () => {
-    await request(app)
-      .post('/api/admin/products/')
+  it('Should add a new product', async () => {
+    const response = await request(app)
+      .post('/api/admin/products')
       .send({
         name: 'Sofá 3 lugares',
         description: 'Sofá 3 Lugares Retrátil e Reclinável Cama Inbox Compact 1,80m Velusoft Cinza',
@@ -39,9 +35,12 @@ describe('POST in /api/admin/products', () => {
           $numberDecimal: '2500',
         },
         quantityInStock: 1,
-        product: 'moveis',
+        category: 'moveis',
       })
-      .expect(401);
+      .expect(201);
+
+    // eslint-disable-next-line no-underscore-dangle
+    idResponse = response.body._id;
   });
 });
 
