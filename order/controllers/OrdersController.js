@@ -27,8 +27,8 @@ class OrdersController {
       const order = await db.Orders.findOne({ where: { id: Number(newOrder.id) } });
 
       return res.status(201).json(order);
-    } catch {
-      return res.status(500).json({ message: 'Error' });
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
     }
   }
 
@@ -56,7 +56,7 @@ class OrdersController {
 
       return res.status(200).json(order);
     } catch (error) {
-      return res.status(500).json({ message: error.message });
+      return res.status(400).json({ message: error.message });
     }
   }
 }

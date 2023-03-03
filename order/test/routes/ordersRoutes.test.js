@@ -64,3 +64,38 @@ describe('PATCH in /orders/:id', () => {
       .expect(200);
   });
 });
+
+describe('POST in /orders', () => {
+  it("Shouldn't add a new order", async () => {
+    await request(app)
+      .post('/orders/')
+      .send()
+      .expect(400);
+  });
+});
+
+describe('PATCH in /orders/:id', () => {
+  it("Shouldn't update an order status", async () => {
+    // eslint-disable-next-line no-undef
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve({
+        name: 'Fiza Lekey',
+        cpf: '063.279.910-25',
+        address: {
+          uf: 'GO',
+          _id: '63feaffd6cc29c3278535be4',
+          city: 'Goiânia',
+          number: 10,
+          street: 'Rua VP',
+          zipCode: '74665760',
+          district: 'Setor Goiânia 2',
+          complement: 'S/N',
+          addressName: 'Trabalho',
+        },
+      }),
+    }));
+    await request(app)
+      .patch('/orders/abc123/PAGO')
+      .expect(400);
+  });
+});
