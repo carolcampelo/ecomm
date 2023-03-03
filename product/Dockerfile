@@ -1,4 +1,4 @@
 FROM node
 COPY . .
 RUN npm install
-ENTRYPOINT npm start
+ENTRYPOINT npm run dev

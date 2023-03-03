@@ -2,4 +2,4 @@ FROM node
 WORKDIR /app/order
 COPY . .
 RUN npm install
-ENTRYPOINT npm start 
+ENTRYPOINT npm run dev

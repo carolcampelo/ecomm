@@ -8,6 +8,8 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - db-mysql-ecomm:/var/lib/mysql
 
   mongo-ecomm:
     image: mongo:5
@@ -38,7 +40,7 @@ services:
     depends_on:
       - mongo-ecomm
     volumes:
-      - .product:/app-node
+      - ./product:/app-node
 
   account:
     build: ./account
@@ -50,7 +52,7 @@ services:
     depends_on:
       - mongo-ecomm
     volumes:
-      - .account:/app-node
+      - ./account:/app-node
 
   finance:
     build: ./finance
@@ -58,7 +60,7 @@ services:
     ports:
       - "3004:3004"
     volumes:
-    - .finance:/app-node
+    - ./finance:/app-node
 
   order:
     build: ./order
@@ -66,4 +68,6 @@ services:
     ports:
       - "3005:3005"
     volumes:
-      - .order:/app-node
+      - ./order:/app-node
+volumes:
+  db-mysql-ecomm:
