@@ -26,7 +26,7 @@ class OrdersController {
       await db.Orders.update(statusLinks, { where: { id: Number(newOrder.id) } });
       const order = await db.Orders.findOne({ where: { id: Number(newOrder.id) } });
 
-      return res.status(200).json(order);
+      return res.status(201).json(order);
     } catch {
       return res.status(500).json({ message: 'Error' });
     }
@@ -39,8 +39,9 @@ class OrdersController {
       await db.Orders.update({ status }, { where: { id: Number(id) } });
       const statusUpdatedOrder = await db.Orders.findOne({ where: { id: Number(id) } });
 
-      const customerInfos = await fetch(`http://${host}:3003/api/users/${statusUpdatedOrder.customerId}`)
-        .then((response) => response.json());
+      const customerInfos = await fetch(`http://ecomm-account:3003/api/users/${statusUpdatedOrder.customerId}`, { method: 'GET' })
+        .then((response) => response.json())
+        .then((data) => data);
 
       await db.Orders.update(
         {
@@ -54,8 +55,8 @@ class OrdersController {
       const order = await db.Orders.findOne({ where: { id: Number(id) } });
 
       return res.status(200).json(order);
-    } catch {
-      return res.status(500).json({ message: 'Status update failed.' });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
     }
   }
 }
