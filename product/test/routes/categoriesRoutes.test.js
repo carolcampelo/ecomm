@@ -82,3 +82,52 @@ describe('DELETE in /api/admin/categories', () => {
       .expect(200);
   });
 });
+
+describe('GET by ID in /api/categories/:id', () => {
+  it('Must NOT return a category according to its ID', async () => {
+    await request(app)
+      .get('/api/categories/123')
+      .set('Accept', 'application/json')
+      .expect('content-type', /json/)
+      .expect(404);
+  });
+});
+
+describe('POST in /api/admin/categories', () => {
+  it('Should NOT add a new category', async () => {
+    await request(app)
+      .post('/api/admin/categories/')
+      .send()
+      .expect(400);
+  });
+});
+
+describe('PUT in /api/admin/categories/:id', () => {
+  it("Shouldn't update a category", async () => {
+    await request(app)
+      .put('/api/admin/categories/123')
+      .send({
+        name: 'fashion',
+        status: false,
+      })
+      .expect(401);
+  });
+});
+describe('PATCH in /api/admin/categories/:id', () => {
+  it("Shouldn't activate a category", async () => {
+    await request(app)
+      .patch('/api/admin/categories/123')
+      .send({
+        status: true,
+      })
+      .expect(401);
+  });
+});
+
+describe('DELETE in /api/admin/categories', () => {
+  it("Shouldn't delete a category", async () => {
+    await request(app)
+      .delete('/api/admin/categories/123')
+      .expect(401);
+  });
+});
