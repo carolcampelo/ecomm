@@ -79,3 +79,46 @@ describe('DELETE in /api/admin/products', () => {
       .expect(200);
   });
 });
+
+describe('POST in /api/admin/products', () => {
+  it("Shouldn't add a new product", async () => {
+    await request(app)
+      .post('/api/admin/products')
+      .send()
+      .expect(401);
+  });
+});
+
+describe('GET by ID in /api/products/:id', () => {
+  it('Must NOT return a product according to its ID', async () => {
+    await request(app)
+      .get('/api/products/123')
+      .expect(404);
+  });
+});
+
+describe('PUT in /api/admin/products/:id', () => {
+  it("Shouldn't update a product", async () => {
+    await request(app)
+      .put('/api/admin/products/123')
+      .send({
+        name: 'Sofá 2 lugares',
+        description: 'Sofá 2 Lugares Retrátil e Reclinável Cama Inbox Compact 1,80m Velusoft Cinza',
+        slug: 'sofa-2-lugares-teste',
+        price: {
+          $numberDecimal: '2000',
+        },
+        quantityInStock: 3,
+        category: 'moveis',
+      })
+      .expect(401);
+  });
+});
+
+describe('DELETE in /api/admin/products', () => {
+  it("Shouldn't delete a product", async () => {
+    await request(app)
+      .delete('/api/admin/products/123')
+      .expect(401);
+  });
+});
