@@ -104,7 +104,36 @@ describe('DELETE in /api/admin/users', () => {
   });
 });
 
-// .get('/api/users/:id', UserController.listUsersById)
-// .post('/api/admin/users', UserController.addUsers)
-// .put('/api/admin/users/:id', UserController.updateUsers)
-// .delete('/api/admin/users/:id', UserController.deleteUsers);
+describe('POST in /api/admin/users', () => {
+  it("Shouldn't add a new user", async () => {
+    await request(app)
+      .post('/api/admin/users/')
+      .send()
+      .expect(401);
+  });
+});
+
+describe('GET by ID in /api/users/:id', () => {
+  it('Must NOT return an user according to its ID', async () => {
+    await request(app)
+      .get('/api/users/123')
+      .expect(404);
+  });
+});
+
+describe('PUT in /api/admin/users/:id', () => {
+  it("Shouldn't update an user", async () => {
+    await request(app)
+      .put('/api/admin/users/123')
+      .send()
+      .expect(401);
+  });
+});
+
+describe('DELETE in /api/admin/users', () => {
+  it("Shouldn't delete an user", async () => {
+    await request(app)
+      .delete('/api/admin/users/123')
+      .expect(401);
+  });
+});
