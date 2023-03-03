@@ -47,3 +47,31 @@ describe('PATCH in /payments/:id', () => {
     expect(response.body.status).toEqual('CANCELADO');
   });
 });
+
+describe('POST in /payments', () => {
+  it("Shouldn't add a new payment", async () => {
+    await request(app)
+      .post('/payments/')
+      .send()
+      .expect(400);
+  });
+});
+
+describe('GET by ID in /payments/:id', () => {
+  it('Must return a payment according to its ID', async () => {
+    await request(app)
+      .get('/payments/abc123')
+      .expect(404);
+  });
+});
+
+describe('PATCH in /payments/:id', () => {
+  it('Should update a payment status', async () => {
+    await request(app)
+      .patch('/payments/abc123')
+      .send({
+        status: 'CANCELADO',
+      })
+      .expect(404);
+  });
+});
