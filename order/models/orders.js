@@ -1,7 +1,7 @@
-'use strict';
 const {
-  Model, Sequelize
+  Model, Sequelize,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Orders extends Model {
     static associate(models) {
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     deliveryAddress: DataTypes.JSON,
     orderItems: DataTypes.JSON,
     status: DataTypes.STRING,
-    links: DataTypes.JSON
+    links: DataTypes.JSON,
   }, {
     sequelize,
     modelName: 'Orders',

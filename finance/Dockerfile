@@ -2,4 +2,4 @@ FROM node
 WORKDIR /app/finance
 COPY . .
 RUN npm install
-ENTRYPOINT npm start 
+ENTRYPOINT npm run dev

@@ -1,5 +1,7 @@
-export function searchUserAccountByUfUseCase(array, uf){
-    const userAccountsWithAddress = array.filter(user => (user.hasOwnProperty('address')));
-    const userAccountsByUf = userAccountsWithAddress.filter(userAccountsWithAddress => userAccountsWithAddress.address.uf === uf)
-    return userAccountsByUf;
+/* eslint-disable no-prototype-builtins */
+export default function searchUserAccountByUfUseCase(array, uf) {
+  const userAccountsWithAddress = array.filter((user) => (user.hasOwnProperty('address')));
+  const userAccountsByUf = userAccountsWithAddress
+    .filter((userAccountsWithAddress) => userAccountsWithAddress.address.uf === uf);
+  return userAccountsByUf;
 }
