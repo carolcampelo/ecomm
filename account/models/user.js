@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
   id: { type: String },
@@ -46,6 +47,26 @@ const userSchema = new mongoose.Schema({
   },
 }, {
   versionKey: false,
+});
+
+userSchema.pre('save', function (next) {
+  const user = this;
+  if (this.isModified || this.isNew) {
+    bcrypt.genSalt(12, (saltError, salt) => {
+      if (saltError) {
+        return next(saltError);
+      }
+      bcrypt.hash(user.password, salt, (hashError, hash) => {
+        if (hashError) {
+          return next(hashError);
+        }
+        user.password = hash;
+        next();
+      });
+    });
+  } else {
+    return next();
+  }
 });
 
 const users = mongoose.model('users', userSchema);
