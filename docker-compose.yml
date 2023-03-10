@@ -19,7 +19,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=secret
     ports:
-      - "27017:27017"
+      - 27017:27017
 
   mongo-seed:
     image: mongo:5
@@ -34,7 +34,7 @@ services:
     build: ./product
     container_name: ecomm-product
     ports: 
-      - "3002:3002"
+      - 3002:3002
     environment:
       - DB_HOST=mongo-ecomm
     depends_on:
@@ -46,7 +46,7 @@ services:
     build: ./account
     container_name: ecomm-account
     ports:
-      - "3003:3003"
+      - 3003:3003
     environment:
       - DB_HOST=mongo-ecomm
     depends_on:
@@ -58,7 +58,7 @@ services:
     build: ./finance
     container_name: ecomm-finance
     ports:
-      - "3004:3004"
+      - 3004:3004
     volumes:
     - ./finance:/app-node
 
@@ -66,7 +66,7 @@ services:
     build: ./order
     container_name: ecomm-order
     ports:
-      - "3005:3005"
+      - 3005:3005
     volumes:
       - ./order:/app-node
 volumes:

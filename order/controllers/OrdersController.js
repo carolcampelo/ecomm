@@ -52,7 +52,7 @@ class OrdersController {
         { where: { id: Number(id) } },
       );
 
-      const order = await db.Orders.findOne({ where: { id: Number(id) } });
+      const order = await db.Orders.findOne({ where: { id: Number(id) }, attributes: { exclude: ['links'] } });
 
       return res.status(200).json(order);
     } catch (error) {

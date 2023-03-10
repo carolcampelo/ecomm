@@ -51,7 +51,7 @@ class PaymentsController {
       return res.status(200).json(paymentById);
     } catch {
       return res.status(404).json({ message: 'ID Not Found' });
-      }
+    }
   }
 
   static async updatePaymentStatus(req, res) {
