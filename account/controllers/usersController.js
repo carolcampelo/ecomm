@@ -1,10 +1,11 @@
 import users from '../models/user.js';
+import generateToken from '../middlewares/userAuth.js';
 
 class UserController {
   static listUsers = (req, res) => {
     users.find((err, users) => {
       if (err) {
-        res.status(404).send({ message: 'Users not found' });
+        res.status(400).send(err.message);
       } else {
         res.status(200).json(users);
       }
@@ -32,6 +33,15 @@ class UserController {
         res.status(201).send(user.toJSON());
       }
     });
+  };
+
+  static userLogin = async (req, res) => {
+    try {
+      const token = await generateToken(req.user);
+      return res.set('Authorization', token).status(204).send();
+    } catch (err) {
+      return res.status(400).send(err.message);
+    }
   };
 
   static updateUsers = (req, res) => {
