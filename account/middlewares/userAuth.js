@@ -3,7 +3,7 @@ import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import BearerStrategy from 'passport-http-bearer';
 import LocalStrategy from 'passport-local';
-import users from '../models/user.js';
+import User from '../models/user.js';
 
 async function verifyPassword(password, hashPassword) {
   const comparison = await bcrypt.compare(password, hashPassword);
@@ -22,11 +22,10 @@ passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
   session: false,
-}, async (email, password, done) => {
+}, async (userEmail, userPassword, done) => {
   try {
-    // eslint-disable-next-line object-shorthand
-    const user = await users.findOne({ email: email });
-    if (!user || !await verifyPassword(password, user.password)) {
+    const user = await User.findOne({ email: userEmail });
+    if (!user || !await verifyPassword(userPassword, user.password)) {
       return done(null, false, {
         message: 'Check your credentials and try again!',
       });
@@ -40,7 +39,7 @@ passport.use(new LocalStrategy({
 passport.use(new BearerStrategy(
   (token, done) => {
     const payload = jwt.verify(token, process.env.APP_SECRET);
-    const userId = users.findById(payload.id);
+    const userId = User.findById(payload.id);
     console.log(userId);
     done(null, payload, { scope: 'all' });
   },

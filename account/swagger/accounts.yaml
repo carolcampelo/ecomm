@@ -54,10 +54,8 @@ paths:
             application/json:
               example: Not found
     post:
-      tags:
-       - admin
       summary: Create new user
-      description: Only administrative users will be able to create new categories on the API. 
+      description: Anyone can add a new user on the API. 
       requestBody:
         content:
           application/json:

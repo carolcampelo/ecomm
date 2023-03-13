@@ -1,31 +1,30 @@
-import users from '../models/user.js';
+import User from '../models/user.js';
 import generateToken from '../middlewares/userAuth.js';
 
 class UserController {
   static listUsers = (req, res) => {
-    users.find((err, users) => {
+    User.find((err, user) => {
       if (err) {
-        res.status(400).send(err.message);
-      } else {
-        res.status(200).json(users);
+        return res.status(500).send(err.message);
       }
+      return res.status(200).json(user);
     });
   };
 
-  static listUsersById = (req, res) => {
+  static findUserById = (req, res) => {
     const { id } = req.params;
 
-    users.findById(id, (err, users) => {
+    User.findById(id, (err, user) => {
       if (err) {
         res.status(404).send({ message: `${err.message} - ID Not Found.` });
       } else {
-        res.status(200).json(users);
+        res.status(200).json(user);
       }
     });
   };
 
-  static addUsers = (req, res) => {
-    const user = new users(req.body);
+  static addUser = (req, res) => {
+    const user = new User(req.body);
     user.save((err) => {
       if (err) {
         res.status(401).send({ message: `${err.message} - Access Denied.` });
@@ -44,26 +43,26 @@ class UserController {
     }
   };
 
-  static updateUsers = (req, res) => {
+  static updateUser = (req, res) => {
     const { id } = req.params;
 
-    users.findByIdAndUpdate(id, { $set: req.body }, (err) => {
+    User.findByIdAndUpdate(id, { $set: req.body }, (err) => {
       if (err) {
         res.status(401).send({ message: `${err.message} - Access Denied.` });
       } else {
-        res.status(200).json(users);
+        res.status(200).json(User);
       }
     });
   };
 
-  static deleteUsers = (req, res) => {
+  static deleteUser = (req, res) => {
     const { id } = req.params;
 
-    users.findByIdAndDelete(id, (err) => {
+    User.findByIdAndDelete(id, (err) => {
       if (err) {
-        res.status(401).send({ message: `${err.message} - Access Denied.` });
+        res.status(400).send({ message: `${err.message}` });
       } else {
-        res.status(200).json(users);
+        res.status(200).json(User);
       }
     });
   };
