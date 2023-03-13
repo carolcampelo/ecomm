@@ -7,8 +7,8 @@ const router = express.Router();
 router
   .get('/api/products', ProductController.findProducts)
   .get('/api/products/:id', ProductController.findProductById)
-  .post('/api/admin/products', authBearer, ProductController.addProducts)
-  .put('/api/admin/products/:id', authBearer, ProductController.updateProducts)
-  .delete('/api/admin/products/:id', authBearer, ProductController.deleteProducts);
+  .post('/api/admin/products', authBearer, ProductController.addProduct)
+  .put('/api/admin/products/:id', authBearer, ProductController.updateProduct)
+  .delete('/api/admin/products/:id', authBearer, ProductController.deleteProduct);
 
 export default router;

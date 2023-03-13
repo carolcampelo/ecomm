@@ -1,30 +1,30 @@
-import categories from '../models/category.js';
+import Category from '../models/category.js';
 
 class CategoryController {
   static listCategories = (req, res) => {
-    categories.find((err, categories) => {
+    Category.find((err, category) => {
       if (err) {
         res.status(404).send({ message: 'Categories not found' });
       } else {
-        res.status(200).json(categories);
+        res.status(200).json(category);
       }
     });
   };
 
-  static listCategoriesById = (req, res) => {
+  static listCategoryById = (req, res) => {
     const { id } = req.params;
 
-    categories.findById(id, (err, categories) => {
+    Category.findById(id, (err, category) => {
       if (err) {
         res.status(404).send({ message: `${err.message} - ID Not Found.` });
       } else {
-        res.status(200).json(categories);
+        res.status(200).json(category);
       }
     });
   };
 
-  static addCategories = (req, res) => {
-    const category = new categories(req.body);
+  static addCategory = (req, res) => {
+    const category = new Category(req.body);
     category.save((err) => {
       if (err) {
         res.status(400).send({ message: `${err.message} - Add category failed.` });
@@ -34,38 +34,38 @@ class CategoryController {
     });
   };
 
-  static updateCategories = (req, res) => {
+  static updateCategory = (req, res) => {
     const { id } = req.params;
 
-    categories.findByIdAndUpdate(id, { $set: req.body }, (err) => {
+    Category.findByIdAndUpdate(id, { $set: req.body }, (err) => {
       if (err) {
         res.status(401).send({ message: `${err.message} - Access Denied.` });
       } else {
-        res.status(200).json(categories);
+        res.status(200).json(Category);
       }
     });
   };
 
-  static activateCategories = (req, res) => {
+  static activateCategory = (req, res) => {
     const { id } = req.params;
 
-    categories.findByIdAndUpdate(id, { $set: { status: true } }, (err) => {
+    Category.findByIdAndUpdate(id, { $set: { status: true } }, (err) => {
       if (err) {
         res.status(401).send({ message: `${err.message} - Access Denied.` });
       } else {
-        res.status(200).json(categories);
+        res.status(200).json(Category);
       }
     });
   };
 
-  static deleteCategories = (req, res) => {
+  static deleteCategory = (req, res) => {
     const { id } = req.params;
 
-    categories.findByIdAndDelete(id, (err) => {
+    Category.findByIdAndDelete(id, (err) => {
       if (err) {
         res.status(401).send({ message: `${err.message} - Access Denied.` });
       } else {
-        res.status(200).json(categories);
+        res.status(200).json(Category);
       }
     });
   };

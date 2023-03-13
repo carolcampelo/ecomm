@@ -6,10 +6,10 @@ const router = express.Router();
 
 router
   .get('/api/categories', CategoryController.listCategories)
-  .get('/api/categories/:id', CategoryController.listCategoriesById)
-  .post('/api/admin/categories', authBearer, CategoryController.addCategories)
-  .put('/api/admin/categories/:id', authBearer, CategoryController.updateCategories)
-  .patch('/api/admin/categories/:id', authBearer, CategoryController.activateCategories)
-  .delete('/api/admin/categories/:id', authBearer, CategoryController.deleteCategories);
+  .get('/api/categories/:id', CategoryController.listCategoryById)
+  .post('/api/admin/categories', authBearer, CategoryController.addCategory)
+  .put('/api/admin/categories/:id', authBearer, CategoryController.updateCategory)
+  .patch('/api/admin/categories/:id', authBearer, CategoryController.activateCategory)
+  .delete('/api/admin/categories/:id', authBearer, CategoryController.deleteCategory);
 
 export default router;
