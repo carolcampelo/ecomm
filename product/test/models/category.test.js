@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import categories from '../../models/category.js';
+import Category from '../../src/models/category.js';
 
 describe('Category model test', () => {
   const objectCategory = {
@@ -8,7 +8,7 @@ describe('Category model test', () => {
   };
 
   it('Should initiate a new category', () => {
-    const category = new categories(objectCategory);
+    const category = new Category(objectCategory);
     expect(category).toEqual(expect.objectContaining(objectCategory));
   });
 });
