@@ -27,7 +27,7 @@ class UserController {
     const user = new User(req.body);
     user.save((err) => {
       if (err) {
-        res.status(401).send({ message: `${err.message} - Access Denied.` });
+        res.status(400).send({ message: `${err.message}` });
       } else {
         res.status(201).send(user.toJSON());
       }
@@ -48,7 +48,7 @@ class UserController {
 
     User.findByIdAndUpdate(id, { $set: req.body }, (err) => {
       if (err) {
-        res.status(401).send({ message: `${err.message} - Access Denied.` });
+        res.status(400).send({ message: `${err.message}` });
       } else {
         res.status(200).json(User);
       }

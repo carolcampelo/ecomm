@@ -9,34 +9,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: secret
     ports:
       - 27017:27017
-  mongo-seed:
-    image: mongo:5
-    container_name: mongo-seed
-    links:
-      - mongo
-    volumes:
-      - "./mongo-seed:/mongo-seed"
-    command: /bin/bash "/mongo-seed/import.sh"
-    depends_on:
-      - mongo
-  product:
-    build: ./product
-    container_name: ecomm-product
-    ports:
-      - 3002:3002
-    depends_on:
-      - mongo
-    volumes:
-      - ./product:/app-node
-  account:
-    build: ./account
-    container_name: ecomm-account
-    ports:
-      - 3003:3003
-    depends_on:
-      - mongo
-    volumes:
-      - ./account:/app-node
   mysql:
     image: mysql
     container_name: mysql-ecomm
@@ -47,12 +19,45 @@ services:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
       -  db-mysql-ecomm:/var/lib/mysql
+  redis:
+    image: redis
+    container_name: redis-ecomm
+    ports:
+      - 6379:6379
+  mongo-seed:
+    image: mongo:5
+    container_name: mongo-seed
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    volumes:
+      - "./mongo-seed:/mongo-seed"
+    command: /bin/bash "/mongo-seed/import.sh"
+  product:
+    build: ./product
+    container_name: ecomm-product
+    ports:
+      - 3002:3002
+    links:
+      - mongo
+    volumes:
+      - ./product:/app-node
+  account:
+    build: ./account
+    container_name: ecomm-account
+    ports:
+      - 3003:3003
+    links:
+      - mongo
+    volumes:
+      - ./account:/app-node
   finance:
     build: ./finance
     container_name: ecomm-finance
     ports:
       - 3004:3004
-    depends_on:
+    links:
       - mysql
     volumes:
       - ./finance:/app-node
@@ -61,14 +66,9 @@ services:
     container_name: ecomm-order
     ports:
       - 3005:3005
-    depends_on:
+    links:
       - mysql
     volumes:
       - ./order:/app-node
-  redis:
-    image: redis
-    container_name: redis-ecomm
-    ports:
-      - 6379:6379
 volumes:
   db-mysql-ecomm:
