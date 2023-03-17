@@ -6,6 +6,7 @@ const router = express.Router();
 
 router
   .get('/api/admin/users', authBearer, UserController.listUsers)
+  .get('/api/users/logOut', authBearer, UserController.userLogout)
   .get('/api/users/:id', UserController.findUserById)
   .post('/api/users', UserController.addUser)
   .post('/api/users/login', authLocal, UserController.userLogin)

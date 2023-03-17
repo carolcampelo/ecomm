@@ -1,9 +1,11 @@
+/* eslint-disable object-shorthand */
 import bcrypt from 'bcryptjs';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import BearerStrategy from 'passport-http-bearer';
 import LocalStrategy from 'passport-local';
 import User from '../models/user.js';
+import { findTokenAtBlocklist } from '../../utils/redis/redisAuth.js';
 
 async function verifyPassword(password, hashPassword) {
   const comparison = await bcrypt.compare(password, hashPassword);
@@ -14,7 +16,7 @@ async function generateToken(user) {
   const payload = {
     id: user._id,
   };
-  const token = await jwt.sign(payload, process.env.APP_SECRET);
+  const token = await jwt.sign(payload, process.env.APP_SECRET, { expiresIn: '15m' });
   return token;
 }
 
@@ -37,11 +39,14 @@ passport.use(new LocalStrategy({
 }));
 
 passport.use(new BearerStrategy(
-  (token, done) => {
-    const payload = jwt.verify(token, process.env.APP_SECRET);
-    const userId = User.findById(payload.id);
-    console.log(userId);
-    done(null, payload, { scope: 'all' });
+  async (token, done) => {
+    try {
+      const payload = jwt.verify(token, process.env.APP_SECRET);
+      await findTokenAtBlocklist(token);
+      done(null, payload, { token: token });
+    } catch (err) {
+      done(err);
+    }
   },
 ));
 
@@ -59,6 +64,21 @@ export const authLocal = (req, res, next) => {
   )(req, res, next);
 };
 
-export const authBearer = passport.authenticate('bearer', { session: false });
+export const authBearer = (req, res, next) => {
+  passport.authenticate(
+    'bearer',
+    { session: false },
+    (err, user, info) => {
+      if (err) {
+        return res.status(500).json({ err });
+      }
+      if (!user) {
+        return res.status(401).json({ err, user, info });
+      }
+      req.token = info.token;
+      return next();
+    },
+  )(req, res, next);
+};
 
 export default generateToken;

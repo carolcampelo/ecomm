@@ -1,5 +1,6 @@
 import User from '../models/user.js';
 import generateToken from '../middlewares/userAuth.js';
+import { addTokenToBlocklist } from '../../utils/redis/redisAuth.js';
 
 class UserController {
   static listUsers = (req, res) => {
@@ -40,6 +41,15 @@ class UserController {
       return res.set('Authorization', token).status(204).send();
     } catch (err) {
       return res.status(400).send(err.message);
+    }
+  };
+
+  static userLogout = async (req, res) => {
+    try {
+      await addTokenToBlocklist(req.token);
+      return res.status(204).send('Deu certo.');
+    } catch (err) {
+      return res.status(400).send({ message: `${err.message}` });
     }
   };
 
