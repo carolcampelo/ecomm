@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import products from '../../models/product.js';
+import Product from '../../src/models/product.js';
 
 describe('Product model test', () => {
   const objectProduct = {
@@ -12,7 +12,7 @@ describe('Product model test', () => {
   };
 
   it('Should initiate a new product', () => {
-    const product = new products(objectProduct);
+    const product = new Product(objectProduct);
 
     expect(product.name).toEqual(objectProduct.name);
     expect(product.description).toEqual(objectProduct.description);

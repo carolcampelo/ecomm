@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon ./server.js",
+    "dev": "nodemon server.js",
     "start": "node server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
@@ -14,9 +14,15 @@
   "author": "Carolina Campelo Guisso",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.0",
+    "passport": "^0.6.0",
+    "passport-http-bearer": "^1.0.1",
+    "passport-local": "^1.0.0",
+    "redis": "^4.6.5",
     "swagger-ui-express": "^4.6.0",
     "yamljs": "^0.3.0"
   },

@@ -1,4 +1,6 @@
+/* eslint-disable consistent-return */
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
   id: { type: String },
@@ -48,6 +50,26 @@ const userSchema = new mongoose.Schema({
   versionKey: false,
 });
 
-const users = mongoose.model('users', userSchema);
+userSchema.pre('save', function hashPassword(next) {
+  const user = this;
+  if (this.isModified || this.isNew) {
+    bcrypt.genSalt(12, (saltError, salt) => {
+      if (saltError) {
+        return next(saltError);
+      }
+      bcrypt.hash(user.password, salt, (hashError, hash) => {
+        if (hashError) {
+          return next(hashError);
+        }
+        user.password = hash;
+        next();
+      });
+    });
+  } else {
+    return next();
+  }
+});
 
-export default users;
+const User = mongoose.model('User', userSchema);
+
+export default User;

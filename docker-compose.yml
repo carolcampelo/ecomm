@@ -1,6 +1,15 @@
-version: "3.7"
+version: "3.9"
 services:
-  mysql-ecomm:
+  mongo:
+    image: mongo:5
+    restart: always
+    container_name: mongo-ecomm
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    ports:
+      - 27017:27017
+  mysql:
     image: mysql
     container_name: mysql-ecomm
     restart: always
@@ -9,64 +18,56 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
-      - db-mysql-ecomm:/var/lib/mysql
-
-  mongo-ecomm:
-    image: mongo:5
-    restart: always
-    container_name: mongo-ecomm
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=secret
+      -  db-mysql-ecomm:/var/lib/mysql
+  redis:
+    image: redis
+    container_name: redis-ecomm
     ports:
-      - "27017:27017"
-
+      - 6379:6379
   mongo-seed:
     image: mongo:5
     container_name: mongo-seed
+    depends_on:
+      - mongo
     links:
-      - mongo-ecomm
-    volumes: 
+      - mongo
+    volumes:
       - "./mongo-seed:/mongo-seed"
     command: /bin/bash "/mongo-seed/import.sh"
-    
   product:
     build: ./product
     container_name: ecomm-product
-    ports: 
-      - "3002:3002"
-    environment:
-      - DB_HOST=mongo-ecomm
-    depends_on:
-      - mongo-ecomm
+    ports:
+      - 3002:3002
+    links:
+      - mongo
     volumes:
       - ./product:/app-node
-
   account:
     build: ./account
     container_name: ecomm-account
     ports:
-      - "3003:3003"
-    environment:
-      - DB_HOST=mongo-ecomm
-    depends_on:
-      - mongo-ecomm
+      - 3003:3003
+    links:
+      - mongo
     volumes:
       - ./account:/app-node
-
   finance:
     build: ./finance
     container_name: ecomm-finance
     ports:
-      - "3004:3004"
+      - 3004:3004
+    links:
+      - mysql
     volumes:
-    - ./finance:/app-node
-
+      - ./finance:/app-node
   order:
     build: ./order
     container_name: ecomm-order
     ports:
-      - "3005:3005"
+      - 3005:3005
+    links:
+      - mysql
     volumes:
       - ./order:/app-node
 volumes:
