@@ -70,5 +70,14 @@ services:
       - mysql
     volumes:
       - ./order:/app-node
+  gateway:
+    build: ./api-gateway
+    container_name: ecomm-gateway
+    ports:
+      - 3006:3006
+    depends_on:
+      - mongo
+    volumes:
+      - ./api-gateway:/app-node
 volumes:
   db-mysql-ecomm:
