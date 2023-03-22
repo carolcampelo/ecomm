@@ -71,11 +71,7 @@ Os diversos ambientes devem ser o mais parecidos possível para minimizar proble
 
 ### XI. Logs
 
-As aplicações que seguem os 12 fatores não devem preocuparem-se em gerir e armazenar os logs e sim, tratá-los como eventos. Na aplicação e-Comm ainda não foi desenvolvido um tratamento para logs adequado e isto pode ser um ponto de melhoria.
-
-Sugestão(ões):
-
-- Utilizar um recurso externo para gerir os logs que devem ser enviados para uma única saída.
+As aplicações que seguem os 12 fatores não devem preocuparem-se em gerir e armazenar os logs e sim, tratá-los como eventos. Na aplicação e-Comm é utilizado o Morgan para agrupar e direcionar os logs para STDOUT.
 
 ### XII. Processos Administrativos
 
@@ -113,7 +109,7 @@ Os eventos assíncronos são úteis para quando processos não podem ser finaliz
 
 ### • Agregação de Logs
 
-O conceito de agregar os logs facilita a rastreabilidade de informações e de processos – o que pode ser complicado em um cenário com múltiplos microsserviços. Atualmente o e-Comm não possui logs unificados, mas isto deverá ser implementado.
+O conceito de agregar os logs facilita a rastreabilidade de informações e de processos – o que pode ser complicado em um cenário com múltiplos microsserviços. O e-Comm agrega e direciona os logs para STDOUT através do Morgan.
 
 ### • Agregação de métricas
 
