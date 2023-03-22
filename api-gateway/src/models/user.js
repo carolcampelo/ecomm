@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
