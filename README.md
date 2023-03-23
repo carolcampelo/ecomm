@@ -118,3 +118,31 @@ O conceito de agregar os logs facilita a rastreabilidade de informações e de p
 ### • Agregação de métricas
 
 A gestão dos dados gerados por cada serviço pode facilitar a identificação de informações pertinentes ao projeto, como para o gerenciamento de recursos, informações de saúde do sistema, entre outros. O e-Comm ainda não possui métricas definidas, mas poderiam ser gerados dados do uso do sistema pelos consumidores quando fosse adicionado à produção. Isto poderia informar quais serviços necessitam de reparos ou destinação maior de recursos.
+
+## Outras reflexões sobre Microserviços (Semana 11)
+
+### Padronização ou não das stacks do serviço e, se sim, qual(is) seria(m) as stacks ideais
+
+Atualmente os serviços são padronizados e tem como cerne o Node.js e a conteinerização através do Docker. Algumas APIs Diferem no uso de bancos de dados e ORMs – MongoDB e MySQL para Mongoose e Sequelize, respectivamente.
+Poderia haver padronização do uso de banco de dados, caso possível. No entanto, é importante lembrar de sempre tratá-los de maneira individual, sem que haja compartilhamento de BD entre as APIs para que siga boas práticas.
+
+### Solução para Service Discovery
+
+É possível implementar algum mecanismo de Service Discovery na aplicação, mas atualmente o Docker já realiza as conexões entre serviços, bem como o próprio API Gateway que tem função similar ao realizar o redirecionamento das requisições para os serviços solicitados.
+No entanto, a possibilidade de implementar réplicas de contêineres – para evitar falhas, utilizar como backup, ou para aumentar os recursos em áreas específicas, por exemplo – poderia fazer emergir a necessidade do Service Discovery. Este serviço pode ser configurado no Docker através do docker-compose.
+
+### Aspectos de segurança (rede, aplicação e segurança em repouso)
+
+A aplicação não tem muitas configurações de segurança, apenas autorizações e autenticação para endpoints específicos. Poderiam ser implementadas algumas melhorias, como criptografia de banco de dados, anonimização de informações e adição de certificado para utilização de https.
+
+### Tecnologias a adotar para deploy e build
+
+Alguns processos já são utilizados no build da e-Comm, como verificação de estilo de código com o ESLint, testes unitários e de integração. Estes processos poderiam integrar uma pipeline no GitHub Actions a fim de que as PRs sejam aceitas somente quando passem em todos os pontos de verificação.
+
+### Como lidar com tolerância a falhas em aplicações síncronas (circuit breaker, cache)
+
+É possível implementar um circuit breaker para englobar funções que podem gerar erros possíveis de interromper o funcionamento da aplicação. Uma possibilidade é o uso da lib Opossum, um circuit breaker para Node.js.
+
+### Em que pontos faz sentido usar comunicação assíncrona
+
+Seria interessante implementar comunicação assíncrona na API Finance para a confirmação de pagamento, visto que é necessário tempo para este processamento. Além disso, caso os pedidos integrassem uma seção de “entrega”, poderia contar com comunicação assíncrona também.
