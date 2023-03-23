@@ -1,6 +1,4 @@
 import User from '../models/user.js';
-import generateToken from '../middlewares/userAuth.js';
-import { addTokenToBlocklist } from '../../utils/redis/redisAuth.js';
 
 class UserController {
   static listUsers = (req, res) => {
