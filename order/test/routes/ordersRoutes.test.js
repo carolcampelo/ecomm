@@ -1,6 +1,6 @@
 const request = require('supertest');
 const { describe, it, expect } = require('@jest/globals');
-const app = require('../../index.js');
+const app = require('../../src/index.js');
 
 let idResponse;
 describe('POST in /orders', () => {
