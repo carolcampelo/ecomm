@@ -27,7 +27,6 @@ describe('POST in /api/admin/products', () => {
   it('Should add a new product', async () => {
     const response = await request(app)
       .post('/api/admin/products')
-      .set('Authorization', this.state.clientToken)
       .send({
         name: 'Sofá 3 lugares',
         description: 'Sofá 3 Lugares Retrátil e Reclinável Cama Inbox Compact 1,80m Velusoft Cinza',
