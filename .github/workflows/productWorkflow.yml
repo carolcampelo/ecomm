@@ -1,7 +1,6 @@
 name: e-Comm Product Workflow
 
 on:
-  push:
   pull_request:
     branches: [ "main" ]
 
