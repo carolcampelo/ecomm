@@ -16,7 +16,7 @@ describe('GET in /api/categories', () => {
       .expect('content-type', /json/)
       .expect(200);
 
-    expect(response.body[0].name).toEqual('informatica');
+    expect(response.body[0].name).toEqual('beleza');
   });
 });
 
