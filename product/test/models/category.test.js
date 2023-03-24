@@ -1,5 +1,11 @@
 import { describe, expect, it } from '@jest/globals';
+import mongoose from 'mongoose';
 import Category from '../../src/models/category.js';
+
+afterAll((done) => {
+  mongoose.connection.close();
+  done();
+});
 
 describe('Category model test', () => {
   const objectCategory = {

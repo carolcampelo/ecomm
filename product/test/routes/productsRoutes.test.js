@@ -1,15 +1,11 @@
 import request from 'supertest';
 import { describe, it } from '@jest/globals';
+import mongoose from 'mongoose';
 import app from '../../src/app.js';
 
-let server;
-beforeEach(() => {
-  const port = 3031;
-  server = app.listen(port);
-});
-
-afterEach(() => {
-  server.close();
+afterAll((done) => {
+  mongoose.connection.close();
+  done();
 });
 
 describe('GET in /api/products', () => {

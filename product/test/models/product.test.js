@@ -1,6 +1,11 @@
 import { describe, expect, it } from '@jest/globals';
 import Product from '../../src/models/product.js';
 
+afterAll((done) => {
+  mongoose.connection.close();
+  done();
+});
+
 describe('Product model test', () => {
   const objectProduct = {
     name: 'iPhone 11 Apple 64GB Branco 6,1” 12MP iOS',
