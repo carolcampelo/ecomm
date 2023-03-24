@@ -6,10 +6,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  buildAPIs:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [18.x]
@@ -34,3 +32,16 @@ jobs:
     - name: Order Instalation
       working-directory: ./order
       run: npm i
+
+  buildDocker:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    
+    steps: 
+    - uses: actions/checkout@v3
+    - name: Start Docker Containers
+      run: docker-compose -f "docker-compose.yml" up -d --build
+    
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "docker-compose.yml" down
