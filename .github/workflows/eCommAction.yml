@@ -1,0 +1,40 @@
+name: e-Comm Action
+
+on:
+  push:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Account Instalation
+      working-directory: ./account
+      run: |
+        npm ci
+
+    - uses: actions/checkout@v3
+    - name: Product Instalation
+      working-directory: ./product
+      run: |
+        npm ci
+
+    - uses: actions/checkout@v3
+    - name: Finance Instalation
+      working-directory: ./finance
+      run: |
+        npm ci
+
+    - uses: actions/checkout@v3
+    - name: Order Instalation
+      working-directory: ./order
+      run: |
+        npm ci
