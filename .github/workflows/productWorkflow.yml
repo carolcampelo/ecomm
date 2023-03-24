@@ -6,7 +6,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  buildAPIs:
+  productTests:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,13 +18,11 @@ jobs:
       with:
         node-version: 18
 
-    - name: Install dependencies
-      working-directory: ./account
-      run: npm install
-
-    - name: Run tests
-      working-directory: ./account
-      run:  npm test
+    - name: Install dependencies and test
+      working-directory: ./product
+      run: |
+        npm install
+        npm test
 
     - name: Stop containers
       run: docker-compose -f "docker-compose.yml" down
