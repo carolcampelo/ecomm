@@ -49,7 +49,7 @@ describe('GET in /api/admin/users', () => {
       .set('Accept', 'application/json')
       .expect(200);
 
-    expect(response.body[0].name).toEqual('Fiza Lekey');
+    expect(response.body[0].name).toEqual('Rozia Roero 2');
   });
 });
 
