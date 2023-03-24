@@ -8,9 +8,6 @@ on:
 jobs:
   buildAPIs:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x]
 
     steps:
     - uses: actions/checkout@v3
@@ -33,44 +30,32 @@ jobs:
       working-directory: ./order
       run: npm i
 
-  buildDocker:
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    
-    steps: 
     - uses: actions/checkout@v3
     - name: Start Docker Containers
       run: docker-compose -f "docker-compose.yml" up -d --build
 
-  runTests:
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    
-    steps:
     - uses: actions/checkout@v3
-    - name: Account Instalation
+    - name: Account Tests
       working-directory: ./account
       run: npm test
 
     - uses: actions/checkout@v3
-    - name: Product Instalation
+    - name: Product Tests
       working-directory: ./product
       run: npm test
 
     - uses: actions/checkout@v3
-    - name: Finance Instalation
+    - name: Finance Tests
       working-directory: ./finance
       run: npm test
 
     - uses: actions/checkout@v3
-    - name: Order Instalation
+    - name: Order Tests
       working-directory: ./order
       run: npm test
 
-  stopDocker:
-    runs-on: ubuntu-latest
-    
-    steps:
+    - uses: actions/checkout@v3
     - name: Stop containers
       if: always()
       run: docker-compose -f "docker-compose.yml" down
+  
