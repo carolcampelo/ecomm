@@ -1,0 +1,29 @@
+name: e-Comm Account Workflow
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  accountTests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Start Docker Containers
+      run: docker-compose -f "docker-compose.yml" up -d --build
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install dependencies
+      working-directory: ./account
+      run: npm install
+
+    - name: Run tests
+      working-directory: ./account
+      run:  npm test
+
+    - name: Stop containers
+      run: docker-compose -f "docker-compose.yml" down

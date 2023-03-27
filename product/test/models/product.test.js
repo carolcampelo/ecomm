@@ -1,5 +1,11 @@
 import { describe, expect, it } from '@jest/globals';
+import mongoose from 'mongoose';
 import Product from '../../src/models/product.js';
+
+afterAll((done) => {
+  mongoose.connection.close();
+  done();
+});
 
 describe('Product model test', () => {
   const objectProduct = {
